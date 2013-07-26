@@ -11,7 +11,7 @@ typedef struct OpenHevcWrapperContext {
     AVCodecParserContext *parser;
 } OpenHevcWrapperContext;
 
-OpenHevc_Handle libOpenHevcInit(int nb_pthreads)
+OpenHevc_Handle libOpenHevcInit(int nb_pthreads, int nb_layers)
 {
     HEVCContext *s;
     /* register all the codecs */
@@ -47,6 +47,7 @@ OpenHevc_Handle libOpenHevcInit(int nb_pthreads)
     s = openHevcContext->c->priv_data;
     s->decode_checksum_sei = 0;
     s->threads_number = openHevcContext->c->thread_count; //>1;
+    s->layers_to_decode = nb_layers;
     return (OpenHevc_Handle) openHevcContext;
 }
 

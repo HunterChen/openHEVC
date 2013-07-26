@@ -977,6 +977,7 @@ typedef struct HEVCContext {
     HEVCLocalContext    *HEVClcList[MAX_NB_THREADS];
     HEVCLocalContext    *HEVClc;
     uint8_t             threads_number;
+    uint8_t             layers_to_decode;
     int                 decode_checksum_sei;
     int id;
 #if BITRATE

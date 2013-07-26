@@ -53,6 +53,9 @@ int check_md5_flags;
 // Activate multi-threading if possible
 int nb_pthreads;
 
+// number of layers to decode
+int nb_layers;
+
 // output file
 char *output_file;
 

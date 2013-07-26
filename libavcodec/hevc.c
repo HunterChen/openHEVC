@@ -2335,9 +2335,12 @@ static int hevc_decode_frame(AVCodecContext *avctx, void *data, int *got_output,
     if(!ret)
     	s->bitrateBL += (avpkt->size +s->HEVCsc->skipped_bytes);
 #endif
-
-
-    if (ret < 0) {
+    
+    if (ret >= s->layers_to_decode) {
+        
+        return avpkt->size;
+    }
+    if (ret<0) {
         av_log(avctx, AV_LOG_ERROR, "Invalid NAL unit %d, skipping.\n", sc->nal_unit_type);
         return avpkt->size;
     } else if (ret)	{
@@ -2345,7 +2348,6 @@ static int hevc_decode_frame(AVCodecContext *avctx, void *data, int *got_output,
     	s->bitrateEL += (avpkt->size +s->HEVCsc->skipped_bytes);
 #endif
 #ifdef SVC_EXTENSION
-
         switch_to_shvc_instance(s);
         s = s->SHCVDecoder;
         sc = s->HEVCsc;
